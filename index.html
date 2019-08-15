@@ -11,14 +11,24 @@
         const { render } = ReactDOM
         const { createElement, Component } = React
 
-        const Nav = () => {
-          return "test";
+        const Nav = ({ products, companies }) => {
+          return createElement('div',
+          { className: 'nav' },
+          React.createElement('a', { href : '#products'}, `ProductList (${products.length})`),
+          React.createElement('a', { href : '#companies'}, `CompanyList (${companies.length})`)
+          );
         };
 
         const ProductList = ({products}) => {
             const html = products.map(product => createElement('li', {key: product.id}, `${product.name} - ${product.description}`))
             return createElement('ul', null, html)
         }
+
+        const CompanyList = ({companies}) => {
+            const html = companies.map(company => createElement('li', {key: company.id}, `${company.name}`));
+            return createElement('ul', null, html);
+        }
+
 
         class App extends Component{
             constructor() {
@@ -41,17 +51,17 @@
 
             render() {
               const { products, companies, view } = this.state;
-            //   const nav = React.createElement(Nav, { companies, products, view });
+              const nav = React.createElement(Nav, { companies, products, view });
               let chosenView;
             //   if(view === 'companies'){
-            //     chosenView = React.createElement(CompanyList, { companies });
+                chosenView = React.createElement(CompanyList, { companies });
             //   }
             //   if(view === 'products'){
-                chosenView = React.createElement(ProductList, { products });
+            //    chosenView = React.createElement(ProductList, { products });
             //   }
 
-            //   return React.createElement('div', null, nav, chosenView);
-            return React.createElement('div', null, chosenView);
+            return React.createElement('div', null, nav, chosenView);
+            // return React.createElement('div', null, chosenView);
             }
         }
 
