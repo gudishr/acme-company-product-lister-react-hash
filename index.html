@@ -7,4 +7,23 @@
     <body>
         <div id='root'></div>
     </body>
+    <script>
+        const { render } = ReactDOM
+        const { createElement, Component } = React
+
+        class App extends Component{
+            constructor() {
+                super()
+            
+            }
+
+            render() {
+                return createElement('div', null, 'Testing')
+            }
+        }
+
+        const root = document.querySelector('#root')
+        render(createElement(App), root)
+
+    </script>
 </html>
