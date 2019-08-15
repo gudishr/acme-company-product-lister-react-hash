@@ -41,6 +41,11 @@
             }
 
             componentDidMount() {
+                // 'hashchange'
+                window.addEventListener('hashchange', (ev) => {
+                    const view = window.location.hash.slice(1);
+                    this.setState({view});
+                })
                 const loadData = async() => {
                     const [response1, response2] = await Promise.all([axios.get("https://acme-users-api-rev.herokuapp.com/api/products"), axios.get("https://acme-users-api-rev.herokuapp.com/api/companies")])
                     this.setState({products: response1.data, companies: response2.data})
@@ -53,12 +58,12 @@
               const { products, companies, view } = this.state;
               const nav = React.createElement(Nav, { companies, products, view });
               let chosenView;
-            //   if(view === 'companies'){
+               if(view === 'companies'){
                 chosenView = React.createElement(CompanyList, { companies });
-            //   }
-            //   if(view === 'products'){
-            //    chosenView = React.createElement(ProductList, { products });
-            //   }
+               }
+               if(view === 'products'){
+                chosenView = React.createElement(ProductList, { products });
+               }
 
             return React.createElement('div', null, nav, chosenView);
             // return React.createElement('div', null, chosenView);
