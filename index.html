@@ -15,13 +15,8 @@
           return "test";
         };
 
-        const ProductList = (products) => {
-            const html = products.map(product => {
-                name = product.name
-                description = product.description
-                const lis = createElement('li', {key: product.id}, `${name} - ${description}`)
-            })
-            
+        const ProductList = ({products}) => {
+            const html = products.map(product => createElement('li', {key: product.id}, `${product.name} - ${product.description}`))
             return createElement('ul', null, html)
         }
 
@@ -37,25 +32,26 @@
 
             componentDidMount() {
                 const loadData = async() => {
-                    const [products, companies] = await Promise.all([axios.get("https://acme-users-api-rev.herokuapp.com/api/products"), axios.get("https://acme-users-api-rev.herokuapp.com/api/companies")])
-                    this.setState({products: products.data, companies: companies.data})
+                    const [response1, response2] = await Promise.all([axios.get("https://acme-users-api-rev.herokuapp.com/api/products"), axios.get("https://acme-users-api-rev.herokuapp.com/api/companies")])
+                    this.setState({products: response1.data, companies: response2.data})
                 }
                 loadData()
             }
 
 
             render() {
-              const { companies, products, view } = this.state;
-              const nav = React.createElement(Nav, { companies, products, view });
+              const { products, companies, view } = this.state;
+            //   const nav = React.createElement(Nav, { companies, products, view });
               let chosenView;
-              if(view === 'companies'){
-                chosenView = React.createElement(CompanyList, { companies });
-              }
-              if(view === 'products'){
+            //   if(view === 'companies'){
+            //     chosenView = React.createElement(CompanyList, { companies });
+            //   }
+            //   if(view === 'products'){
                 chosenView = React.createElement(ProductList, { products });
-              }
+            //   }
 
-              return React.createElement('div', null, nav, chosenView);
+            //   return React.createElement('div', null, nav, chosenView);
+            return React.createElement('div', null, chosenView);
             }
         }
 
