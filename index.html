@@ -17,16 +17,26 @@
                 this.state = {
                     products : [],
                     companies : []
-                }           
+                }
             }
 
             render() {
-                return createElement('div', null, 'Testing')
+              const { companies, products, view } = this.state;
+              const nav = React.createElement(Nav, { companies, products, view });
+              let chosenView;
+              if(view === 'companies'){
+                chosenView = React.createElement(CompanyList, { companies });
+              }
+              if(view === 'products'){
+                chosenView = React.createElement(ProductList, { products });
+              }
+
+              return React.createElement('div', null, nav, chosenView);
             }
         }
 
         const root = document.querySelector('#root')
-        render(createElement(App), root)
+        render(createElement(App), root);
 
     </script>
 </html>
