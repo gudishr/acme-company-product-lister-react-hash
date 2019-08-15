@@ -11,14 +11,24 @@
         const { render } = ReactDOM
         const { createElement, Component } = React
 
+        const Nav = () => {
+          return "test";
+        };
+
         class App extends Component{
             constructor() {
                 super()
                 this.state = {
                     products : [],
-                    companies : []
-                }
+                    companies : [],
+                    view : window.location.hash.slice(1)
+                };
             }
+
+            componentDidMount() {
+              console.log(this.state.view);
+            }
+
 
             render() {
               const { companies, products, view } = this.state;
